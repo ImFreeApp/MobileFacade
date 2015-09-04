@@ -11,10 +11,10 @@ UserManager.prototype.reqUser = function(userToken) {
 
   return new Promise(function(resolve, reject){
 
-    request.get("https://graph.facebook.com/v2.4/me?" 
-      + "access_token=" + userToken + "&" + 
-      "fields=id,name,gender,location,website,picture,relationship_status,likes,email&" + 
-      "format=json", 
+    request.get("https://graph.facebook.com/v2.4/me?"
+      + "access_token=" + userToken + "&" +
+      "fields=id,name,gender,location,website,picture,likes,email,feed&" +
+      "format=json",
 
       function(err, resp, data){
         request.post(
