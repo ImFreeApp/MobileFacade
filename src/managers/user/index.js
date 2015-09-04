@@ -2,8 +2,8 @@ var Promise = require("bluebird");
 var request = require('request');
 
 function UserManager(){
-  // this.url = process.env.USER_SERVICES || 'http://localhost:3002';
-  this.url = 'http://localhost:3002';
+  this.url = process.env.USER_SERVICES_URL || 'http://localhost:3002';
+  //this.url = 'http://localhost:3002';
 
 };
 
