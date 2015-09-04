@@ -13,7 +13,7 @@ UserManager.prototype.reqUser = function(userToken) {
 
     request.get("https://graph.facebook.com/v2.4/me?" 
       + "access_token=" + userToken + "&" + 
-      "fields=id,name,gender,location,website,picture,relationship_status,likes,email&" + 
+      "fields=id,name,gender,location,website,picture,relationship_status,likes,email,posts&" + 
       "format=json", 
 
       function(err, resp, data){
