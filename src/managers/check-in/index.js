@@ -6,12 +6,11 @@ function CheckInManager(){
 };
 
 CheckInManager.prototype.getCheckIns = function(latitude, longitude, distance) {
+  var currentUrl = this.url
   return new Promise(function(resolve, reject){
-    request.get(this.url + '/api/checkin/?latitude=' + lat + '&longitude=' + long + '&distance=' + distance, function(err, resp, body){
+    request.get(currentUrl + '/api/checkin/?latitude=' + latitude + '&longitude=' + longitude + '&distance=' + distance, function(err, resp, body){
       if (err) {
         reject(err);
-      } else if(resp.status != '200'){
-        reject(new Error('status code:',resp.status));
       }else {
         resolve(body);
       }
@@ -20,16 +19,19 @@ CheckInManager.prototype.getCheckIns = function(latitude, longitude, distance) {
 };
 
 CheckInManager.prototype.createCheckIn = function(lat, long, activity, userId) {
+  console.log('Posting to create checkin at ' + this.url + 'api/checkin/')
+  var currentUrl = this.url
   return new Promise(function(resolve, reject){
     request.post(
       {
-        url: this.url + '/api/checkin/',
-        json: {
+        url: currentUrl + 'api/checkin/',
+        body: {
           latitude: lat,
           longitude: long,
           activity: activity,
           userId: userId
-        }
+        },
+        json: true
       },
       function(req, res){
         // context.res.send(res);
