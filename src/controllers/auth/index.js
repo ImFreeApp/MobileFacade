@@ -22,8 +22,8 @@ passport.use(new FacebookTokenStrategy({
   function(accessToken, refreshToken, profile, done) {
     console.log('AUTH USER');
     userManager.reqUser(accessToken)
-      .then(function(body){
-        done(null, body);
+      .then(function(user){
+        done(null, user.body);
       })
       .catch(function(err){
         done(err, null);
@@ -37,8 +37,8 @@ router.use(require('body-parser').json());
 router.use(require('cors')());
 
 router.post('/facebook', passport.authenticate('facebook-token', { session: false }) ,function (req, res) {
-    // do something with req.user 
-  res.sendStatus(req.user ? 200 : 401);
+  // do something with req.user 
+  res.send({name: req.user.name, fbId: req.user.fbId, pic: req.user.picture});
 });
 
 

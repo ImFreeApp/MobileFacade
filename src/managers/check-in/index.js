@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 var request = require('request');
 
 function CheckInManager(){
-  this.url = process.env.GEO_SERVICES_URL || 'http://localhost:3001/';
+  this.url = process.env.GEO_SERVICES_URL || 'http://localhost:3001';
 };
 
 CheckInManager.prototype.getCheckIns = function(latitude, longitude, distance) {
@@ -24,7 +24,7 @@ CheckInManager.prototype.createCheckIn = function(lat, long, activity, userId) {
   return new Promise(function(resolve, reject){
     request.post(
       {
-        url: currentUrl + 'api/checkin/',
+        url: currentUrl + '/api/checkin/',
         body: {
           latitude: lat,
           longitude: long,
