@@ -20,6 +20,7 @@ passport.use(new FacebookTokenStrategy({
   },
 
   function(accessToken, refreshToken, profile, done) {
+    console.log('AUTH USER');
     userManager.reqUser(accessToken)
       .then(function(body){
         done(null, body);

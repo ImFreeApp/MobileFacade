@@ -17,13 +17,15 @@ UserManager.prototype.reqUser = function(userToken) {
       "format=json",
 
       function(err, resp, data){
+        console.log(typeof resp.body);
         request.post(
           {
             url: 'http://localhost:3002' + '/api/user/',
-            json: {
-              token: userToken,
-              userData: resp.body
-            }
+            body: {
+              "token": userToken,
+              "userData": JSON.parse(resp.body)
+            },
+            json: true
           },
           function(req, userSerivceRes){
             resolve(userSerivceRes);

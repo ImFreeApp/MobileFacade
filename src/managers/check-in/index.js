@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 var request = require('request');
 
 function CheckInManager(){
-  this.url = process.env.GEO_SERVICES_URL || 'http://localhost:3001';
+  this.url = process.env.GEO_SERVICES_URL || 'http://localhost:3001/';
 };
 
 CheckInManager.prototype.getCheckIns = function(latitude, longitude, distance) {
