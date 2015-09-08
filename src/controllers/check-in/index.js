@@ -2,14 +2,14 @@ var CheckInManager = require('../../managers/check-in');
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-
+var passport = require('passport');
 var checkInManager = new CheckInManager();
 
 router.use(require('body-parser').json());
 router.use(require('cors')());
 
 
-router.post('/', function(req, res){
+router.post('/addcheckin', passport.authenticate('facebook-token', { session: false }),  function(req, res){
   console.log(req.body);
   console.log(CheckInManager);
   checkInManager.createCheckIn(req.body.latitude, req.body.longitude, req.body.activity, req.body.userId)
@@ -19,7 +19,7 @@ router.post('/', function(req, res){
 
 })
 
-router.get('/', function(req, res){
+router.post('/getcheckin', passport.authenticate('facebook-token', { session: false }), function(req, res){
   checkInManager.getCheckIns(req.query.latitude, req.query.longitude, req.query.distance)
   .then(function(body){
 
@@ -29,23 +29,23 @@ router.get('/', function(req, res){
 
     var recurseCheck = function(index){
 
+      if (!dataBody[index]) {
+        userRes.send(results);
+        return;
+      }
+
       request.get('http://localhost:3002/api/user/' + dataBody[index].userId, function(err, res, userBody){
+
 
         if (req.query.currentFbId !== dataBody[index].userId){
           console.log(dataBody[index]);
           results.push(prettifyData(dataBody[index], userBody));
-          index+=1;
+          recurseCheck(index+=1);
         } else {
           console.log('SAME ID >>>>>> SKIPPING')
-          index+=1;
+          recurseCheck(index+=1);
         }
 
-        if (index === dataBody.length - 1) {
-          userRes.send(results);
-          return;
-        } else {
-          recurseCheck(index);
-        }
 
       })
     }
@@ -57,7 +57,7 @@ router.get('/', function(req, res){
 
 var prettifyData = function(data, userBody){
   var obj = {};
-  obj.activities = [data.activity];
+  obj.activities = data.activity;
   obj.id = data.userId;
   var userData = JSON.parse(userBody);
   obj.profilePic = userData.picture.data.url;
