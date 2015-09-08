@@ -28,12 +28,17 @@ router.get('/', function(req, res){
     var userRes = res;
 
     var recurseCheck = function(index){
+
       request.get('http://localhost:3002/api/user/' + dataBody[index].userId, function(err, res, userBody){
 
-        console.log(dataBody[index]);
-        results.push(prettifyData(dataBody[index], userBody));
+        if (req.query.currentFbId !== dataBody[index].userId){
+          console.log(dataBody[index]);
+          results.push(prettifyData(dataBody[index], userBody));
+        } else {
+          console.log('SAME ID >>>>>> SKIPPING')
+        }
 
-        if (results.length === dataBody.length) {
+        if (index === dataBody.length - 1) {
           userRes.send(results);
           return;
         } else {
