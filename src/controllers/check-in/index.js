@@ -34,15 +34,17 @@ router.get('/', function(req, res){
         if (req.query.currentFbId !== dataBody[index].userId){
           console.log(dataBody[index]);
           results.push(prettifyData(dataBody[index], userBody));
+          index+=1;
         } else {
           console.log('SAME ID >>>>>> SKIPPING')
+          index+=1;
         }
 
         if (index === dataBody.length - 1) {
           userRes.send(results);
           return;
         } else {
-          recurseCheck(index++);
+          recurseCheck(index);
         }
 
       })
