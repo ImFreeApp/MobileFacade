@@ -1,9 +1,10 @@
 {
-  "name": "user-services",
+  "name": "mobile-facade",
   "version": "0.0.1",
-  "description": "Provides User information for our Application Stack",
+  "description": "serves as a facade for our back-end services",
   "main": "app.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
