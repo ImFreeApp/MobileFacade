@@ -25,7 +25,6 @@
     "body-parser": "^1.13.3",
     "cors": "^2.7.1",
     "express": "^4.13.3",
-    "mongoose": "^4.1.5",
     "passport": "^0.3.0",
     "passport-facebook-token": "^2.3.0",
     "request": "^2.61.0"
