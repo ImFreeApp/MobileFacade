@@ -2,6 +2,7 @@ var Promise = require("bluebird");
 var request = require('request');
 
 function ChatManager(){
+  // Define the appropriate process environment url
   if(process.env.CHATSERVICES_PORT_3003_TCP_ADDR) {
       this.url = 'http://'+process.env.CHATSERVICES_PORT_3003_TCP_ADDR+':3003';
   } else {
@@ -9,6 +10,7 @@ function ChatManager(){
   } 
 };
 
+// Makes post request to chat database to retrieve all chats of a user
 ChatManager.prototype.getUserChats = function(userId) {
   var currentUrl = this.url;
   return new Promise(function(resolve, reject) {
@@ -30,9 +32,9 @@ ChatManager.prototype.getUserChats = function(userId) {
   })
 };
 
+// Makes post request to chat database to retrieve chat conversations given a (or a list of) chatID/s
 ChatManager.prototype.getChatDetails = function(chatIDs) {
   var currentUrl = this.url;
-  console.log('inside chatManager.getChatDetails');
   return new Promise(function(resolve, reject) {
     request.post({
       url: currentUrl + '/api/chat/getChatDetails/', 
@@ -52,3 +54,5 @@ ChatManager.prototype.getChatDetails = function(chatIDs) {
 };
 
 module.exports = ChatManager;
+
+// leave extra line at the end

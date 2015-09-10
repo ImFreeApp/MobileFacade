@@ -4,8 +4,8 @@ var request = require('request');
 var passport = require('passport');
 var UserManager = require('../../managers/user');
 var userManager = new UserManager();
-router.use(passport.initialize());
 
+router.use(passport.initialize());
 router.use(require('body-parser').json());
 router.use(require('cors')());
 

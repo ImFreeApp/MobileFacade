@@ -1,11 +1,13 @@
 var Promise = require("bluebird");
 var request = require('request');
 
+// Define the appropriate process environment url
 function CheckInManager(){
   if(process.env.GEOSERVICES_PORT_3001_TCP_ADDR) this.url = 'http://'+process.env.GEOSERVICES_PORT_3001_TCP_ADDR+':3001';
   else this.url = process.env.GEO_SERVICES_URL || 'http://localhost:3001';
 };
 
+// Makes get request to geoservices 
 CheckInManager.prototype.getCheckIns = function(latitude, longitude, distance) {
   var currentUrl = this.url
   return new Promise(function(resolve, reject){
@@ -19,6 +21,7 @@ CheckInManager.prototype.getCheckIns = function(latitude, longitude, distance) {
   })
 };
 
+// Makes post request to geoservices to store the checkin details, including latitude, longitude, activity and userID.
 CheckInManager.prototype.createCheckIn = function(lat, long, activity, userId) {
   console.log('Posting to create checkin at ' + this.url + 'api/checkin/')
   var currentUrl = this.url
@@ -43,3 +46,5 @@ CheckInManager.prototype.createCheckIn = function(lat, long, activity, userId) {
 };
 
 module.exports = CheckInManager;
+
+// leave extra line at the end
