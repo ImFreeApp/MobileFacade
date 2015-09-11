@@ -18,7 +18,6 @@ UserManager.prototype.reqUser = function(userToken) {
       "format=json",
 
       function(err, resp, data){
-        console.log(typeof resp.body);
         request.post(
           {
             url: 'http://localhost:3002' + '/api/user/',

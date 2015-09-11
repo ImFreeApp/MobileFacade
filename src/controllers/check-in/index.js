@@ -23,8 +23,11 @@ router.post('/getcheckin', passport.authenticate('facebook-token', { session: fa
   checkInManager.getCheckIns(req.query.latitude, req.query.longitude, req.query.distance)
   .then(function(body){
 
+    // FB response with a bunch of users
     var dataBody = JSON.parse(body);
+    // Empty results array
     var results = [];
+    // 
     var userRes = res;
 
     var recurseCheck = function(index){
@@ -34,20 +37,31 @@ router.post('/getcheckin', passport.authenticate('facebook-token', { session: fa
         return;
       }
 
+      var newErr = function(){
+        userRes.sendStatus(500);
+        return;
+      }
+
       request.get('http://localhost:3002/api/user/' + dataBody[index].userId, function(err, res, userBody){
 
 
         if (req.query.currentFbId !== dataBody[index].userId){
-          console.log(dataBody[index]);
-          results.push(prettifyData(dataBody[index], userBody));
+          var pretty = prettifyData(dataBody[index], userBody);
+          if (!pretty) {
+            newErr();
+            return;
+          }
+          results.push(pretty);
           recurseCheck(index+=1);
         } else {
-          console.log('SAME ID >>>>>> SKIPPING')
           recurseCheck(index+=1);
         }
 
 
-      })
+      });
+
+
+
     }
 
     recurseCheck(0);
@@ -56,10 +70,17 @@ router.post('/getcheckin', passport.authenticate('facebook-token', { session: fa
 })
 
 var prettifyData = function(data, userBody){
+  var userData = JSON.parse(userBody);
+
+  if (!userData.likes.data || !data.geo[0] || !data.geo[1] || !userData.picture.data.url || !userData.name)
+    return null;
+
   var obj = {};
   obj.activities = data.activity;
   obj.id = data.userId;
-  var userData = JSON.parse(userBody);
+  obj.lat = data.geo[1];
+  obj.long = data.geo[0];
+
   obj.profilePic = userData.picture.data.url;
   obj.username = userData.name;
 

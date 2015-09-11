@@ -12,7 +12,7 @@ CheckInManager.prototype.getCheckIns = function(latitude, longitude, distance) {
     request.get(currentUrl + '/api/checkin/?latitude=' + latitude + '&longitude=' + longitude + '&distance=' + distance, function(err, resp, body){
       if (err) {
         reject(err);
-      }else {
+      } else {
         resolve(body);
       }
     });
