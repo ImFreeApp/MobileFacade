@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 var request = require('request');
 
 function UserManager(){
-  if(process.env.GEOSERVICES_PORT_3001_TCP_ADDR) this.url = 'http://'+process.env.USERSERVICES_PORT_3002_TCP_ADDR+':3001';
+  if(process.env.USERSERVICES_PORT_3002_TCP_ADDR) this.url = 'http://'+process.env.USERSERVICES_PORT_3002_TCP_ADDR+':3002';
   else this.url = process.env.USER_SERVICES_URL || 'http://localhost:3002';
   //this.url = 'http://localhost:3002';
 
