@@ -27,6 +27,7 @@
     "express": "^4.13.3",
     "passport": "^0.3.0",
     "passport-facebook-token": "^2.3.0",
+    "socket.io": "^1.3.6",
     "request": "^2.61.0"
   }
 }
