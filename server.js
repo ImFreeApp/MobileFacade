@@ -7,8 +7,8 @@ var FacebookTokenStrategy = require('passport-facebook-token').Strategy;
 app.use('/api/', require('./src/controllers'));
 
 var options = {
-  clientID: process.env.FACEBOOK_APP_ID || "840774716036629",
-  clientSecret: process.env.FACEBOOK_APP_SECRET || "d018e4926746117d64546bed6bc4e06b"
+  clientID: process.env.FACEBOOK_APP_ID, 
+  clientSecret: process.env.FACEBOOK_APP_SECRET 
 }
 
 // Set up a local strategy session.
