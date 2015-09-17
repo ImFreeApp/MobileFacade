@@ -18,9 +18,9 @@ router.post('/addcheckin', passport.authenticate('facebook-token', { session: fa
   .then(function(checkinRes){
     res.sendStatus(201);
   })
-  .catch(function(err)){
+  .catch(function(err){
     console.error(err);
-  }
+  });
 
 })
 
