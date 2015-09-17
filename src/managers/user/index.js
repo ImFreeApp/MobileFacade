@@ -30,7 +30,7 @@ UserManager.prototype.reqUser = function(userToken) {
               },
               json: true
             },
-            function(req, userSerivceRes,err){
+            function(err, userSerivceRes,body){
               if(err) reject(err);
               else resolve(userSerivceRes);
             }
