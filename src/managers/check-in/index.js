@@ -34,10 +34,9 @@ CheckInManager.prototype.createCheckIn = function(lat, long, activity, userId) {
         },
         json: true
       },
-      function(req, res,err){
+      function(err, res){
         if(err) reject(err);
         else resolve(res);
-        
       }
     );
   })

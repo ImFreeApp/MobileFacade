@@ -9,6 +9,7 @@ function UserManager(){
 };
 
 UserManager.prototype.reqUser = function(userToken) {
+  var currentURL = this.url;
 
   return new Promise(function(resolve, reject){
 
@@ -22,7 +23,7 @@ UserManager.prototype.reqUser = function(userToken) {
         else{
           request.post(
             {
-              url: 'http://localhost:3002' + '/api/user/',
+              url: currentURL + '/api/user/',
               body: {
                 "token": userToken,
                 "userData": JSON.parse(resp.body)
@@ -39,6 +40,12 @@ UserManager.prototype.reqUser = function(userToken) {
     )
   })
 };
+
+UserManager.prototype.reqUserServices = function(userIndex, fn){
+  request.get(this.url + userIndex, function(err, res, userbody){
+    fn(err, res, userbody);
+  })
+}
 
 
 module.exports = UserManager;

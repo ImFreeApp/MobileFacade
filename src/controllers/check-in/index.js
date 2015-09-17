@@ -4,6 +4,8 @@ var router = express.Router();
 var request = require('request');
 var passport = require('passport');
 var checkInManager = new CheckInManager();
+var UserManager = require('../../managers/user');
+var userManager = new UserManager();
 
 router.use(require('body-parser').json());
 router.use(require('cors')());
@@ -45,7 +47,7 @@ router.post('/getcheckin', passport.authenticate('facebook-token', { session: fa
         return;
       }
 
-      request.get('http://localhost:3002/api/user/' + dataBody[index].userId, function(err, res, userBody){
+      userManager.reqUserServices(dataBody[index].userId, function(err, res, userBody){
 
 
         if (req.query.currentFbId !== dataBody[index].userId){
