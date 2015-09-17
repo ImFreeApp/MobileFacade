@@ -16,21 +16,25 @@ UserManager.prototype.reqUser = function(userToken) {
       + "access_token=" + userToken + "&" +
       "fields=id,name,gender,location,website,picture,likes,email,feed&" +
       "format=json",
-
       function(err, resp, data){
-        request.post(
-          {
-            url: 'http://localhost:3002' + '/api/user/',
-            body: {
-              "token": userToken,
-              "userData": JSON.parse(resp.body)
+
+        if(err) reject(err);
+        else{
+          request.post(
+            {
+              url: 'http://localhost:3002' + '/api/user/',
+              body: {
+                "token": userToken,
+                "userData": JSON.parse(resp.body)
+              },
+              json: true
             },
-            json: true
-          },
-          function(req, userSerivceRes){
-            resolve(userSerivceRes);
-          }
-        );
+            function(req, userSerivceRes,err){
+              if(err) reject(err);
+              else resolve(userSerivceRes);
+            }
+          );
+        }
       }
     )
   })

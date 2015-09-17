@@ -15,7 +15,10 @@ router.post('/addcheckin', passport.authenticate('facebook-token', { session: fa
   checkInManager.createCheckIn(req.body.latitude, req.body.longitude, req.body.activity, req.body.userId)
   .then(function(checkinRes){
     res.sendStatus(201);
-  });
+  })
+  .catch(function(err)){
+    console.error(err);
+  }
 
 })
 
